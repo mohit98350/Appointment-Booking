@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{{title}}</title>
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link href="sign-in.css" rel="stylesheet">
+  <link href="sign-in.css" rel="stylesheet">
+</head>
+
+<style>
+{% block style %}{% endblock style %}
+</style>
+<body>
+
+  <div class="header  " style="
+  background: rgb(177, 177, 177) url('../static/img/header.png') no-repeat fixed center
+  {% if "appointment" in request.path or "register" in request.path or "login" in request.path   %}
+  max-height:50px!important;min-height:20px!important;
+  {% endif %} 
+
+  ">
+    
+    <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+        <div class="container"><a class="navbar-brand" href="{% url 'home' %}"><img  style="width: 100%; height: 100px;"src="{% static 'img/logo.png' %}"/></a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" href="#team">Our Team</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" href="#services">Services</a>
+                    </li>
+                    
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" href="#reviews">Testimonial</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" href="#contact">Contact Us</a>
+                    </li>
+                    {%  if request.user.is_authenticated %}
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" href="{% url "myappointment" %}" >{{request.user}}</a>
+                  </li>
+                  {% endif %}
+                  {%  if request.user.is_authenticated  %}
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" href="{% url "logout" %}">Logout</a>
+                  </li>
+                  {% endif %}
+                    {%  if request.user.is_superuser %}
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" href="{% url "manage" %}">Manage</a>
+                  </li>
+                  {% endif %}
+                  {%  if request.user.is_superuser %}
+                  <li class="nav-item" role="presentation">
+                    <a href="{% url "manage" %}" style="float: left;cursor:pointer;" aria-expanded="true" title="You Have {{count}} New Appointments">
+                      <i class="far fa-bell" style="font-size: 20px; float: left; color: black">
+                      </i>
+                  </a>
+                  <span class="badge badge-danger">{{count}}</span>
+                </li>
+                {%endif%}
+                  
+         
+                </ul>
+            </div>
+        </div>
+    </nav>
+   
+   {% block cta %}{% endblock cta %}
+</div>
+
+
+    {% block content %}{% endblock content %}
+
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  
+ <script>
+    {% block script %}{% endblock script %}
+ </script>
+</body>
+
+</html>
